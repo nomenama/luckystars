@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  scroll-behavior: smooth;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -32,5 +33,11 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
 }
