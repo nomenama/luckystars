@@ -1,6 +1,11 @@
 import { getData } from "@/utils/mongoDB/api";
-
 import { Pagination } from "@/app/components/Pagination";
+
+export const metadata = {
+    title: "Euromillions Results: Past Draw Results and History",
+    description:
+        "Explore a comprehensive database of all Euromillions results since the first draw. Download or search for past winning numbers, including historical data and draw details.",
+};
 
 export default async function EuroMillions({ searchParams }) {
     //cannot be negative integer
