@@ -1,6 +1,7 @@
 import { connectToDb } from "@/utils/mongoDB/connection";
 import { unstable_noStore as noStore } from "next/cache";
-import test_data from "@/test_data.json";
+import euromillions from "@/test_data/euromillions_sorted.json";
+import lotto from "@/test_data/lotto_sorted.json";
 
 export async function getData(collectionName, limit = 20, pageNum) {
     noStore();
@@ -9,8 +10,15 @@ export async function getData(collectionName, limit = 20, pageNum) {
         if (process.env.NODE_ENV === "development") {
             const startIndex = limit * (pageNum - 1);
             const endIndex = startIndex + limit;
-            const limitedTestData = test_data.slice(startIndex, endIndex);
-            return { draws: limitedTestData, count: test_data.length };
+            const limitedTestData =
+                collectionName === "euromillions"
+                    ? euromillions.slice(startIndex, endIndex)
+                    : lotto.slice(startIndex, endIndex);
+
+            return {
+                draws: limitedTestData,
+                count: collectionName === "euromillions" ? euromillions.length : lotto.length,
+            };
         }
 
         const client = await connectToDb();
