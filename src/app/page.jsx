@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getLatestData } from "@/utils/mongoDB/api";
+import { dateFormatter, getDayOfTheWeek } from "@/utils/helper";
 
-export default function Home() {
+export default async function Home() {
+    const euromillions_latest_draw = await getLatestData("euromillions");
+
     return (
         <main className="flex-1 mx-auto max-w-7xl flex flex-col items-center p-6 lg:px-8 overflow-auto">
             <div className="bg-white rounded-xl flex flex-col lg:flex-row shadow-2xl">
@@ -25,44 +29,38 @@ export default function Home() {
 
                     <div className="flex justify-start items-center gap-3">
                         <p className="text-blue-900 sm:text-lg font-bold tracking-wide">
-                            Tuesday&apos;s Result
+                            {`${getDayOfTheWeek(euromillions_latest_draw.date)}'s Result`}
                         </p>
 
                         <p className="text-blue-900 sm:text-lg font-bold tracking-wide">-</p>
-                        <p className="text-blue-900 sm:text-lg">23 April 2024</p>
+                        <p className="text-blue-900 sm:text-lg">
+                            {dateFormatter(euromillions_latest_draw.date)}
+                        </p>
                     </div>
 
                     <div className="flex justify-start items-center gap-2 sm:gap-3 my-2 flex-wrap">
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
-                            6
-                        </div>
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
-                            9
-                        </div>
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
-                            11
-                        </div>
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
-                            32
-                        </div>
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
-                            49
-                        </div>
+                        {euromillions_latest_draw.numbers.map((number, index) => (
+                            <div
+                                key={index}
+                                className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
+                                {number}
+                            </div>
+                        ))}
 
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-yellow-500 text-white text-lg sm:text-xl font-bold">
-                            1
-                        </div>
-
-                        <div className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-yellow-500 text-white text-lg sm:text-xl font-bold">
-                            10
-                        </div>
+                        {euromillions_latest_draw.stars.map((star, index) => (
+                            <div
+                                key={index}
+                                className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-yellow-500 text-white text-lg sm:text-xl font-bold">
+                                {star}
+                            </div>
+                        ))}
                     </div>
 
-                    <div className="flex justify-start items-center gap-2 flex-wrap">
+                    {/*                    <div className="flex justify-start items-center gap-2 flex-wrap">
                         <p className="text-gray-700">Uk Millionaire Maker:</p>
 
                         <p className="text-blue-900 text-lg sm:text-2xl font-bold">TPZG 11349</p>
-                    </div>
+                    </div>*/}
 
                     <Link
                         href="euromillions"

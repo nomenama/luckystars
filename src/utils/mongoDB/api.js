@@ -22,3 +22,23 @@ export async function getData(collectionName, limit = 20, pageNum) {
         return { draws: [], count: 0 };
     }
 }
+
+export async function getLatestData(collectionName) {
+    noStore();
+
+    try {
+        const client = await connectToDb();
+        const db = client.db();
+
+        const latestDraw = await db.collection(collectionName).find({}).limit(1).toArray();
+
+        if (latestDraw.length > 0) {
+            return latestDraw[0];
+        } else {
+            return {};
+        }
+    } catch (err) {
+        console.error(err);
+        return {};
+    }
+}
