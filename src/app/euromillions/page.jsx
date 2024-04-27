@@ -68,17 +68,11 @@ export default async function EuroMillions({ searchParams }) {
                             {draws.map((draw) => (
                                 <tr key={draw._id}>
                                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
-                                        {new Date(draw.draw_date).toLocaleDateString("en-GB")}
+                                        {new Date(draw.date).toLocaleDateString("en-GB")}
                                         <dl className="font-normal lg:hidden">
                                             <dt className="sr-only">Draw Date</dt>
                                             <dd className="mt-1 text-gray-700">
-                                                {[
-                                                    draw.num_one,
-                                                    draw.num_two,
-                                                    draw.num_three,
-                                                    draw.num_four,
-                                                    draw.num_five,
-                                                ].map((num, index) =>
+                                                {draw.numbers.map((num, index) =>
                                                     num ? (
                                                         <button
                                                             key={index}
@@ -89,16 +83,15 @@ export default async function EuroMillions({ searchParams }) {
                                                     ) : null
                                                 )}
 
-                                                {[draw.lucky_star_01, draw.lucky_star_02].map(
-                                                    (num, index) =>
-                                                        num ? (
-                                                            <button
-                                                                key={index}
-                                                                className="w-[33px] h-[33px] p-2 rounded-full bg-yellow-500 text-white mr-2 font-bold text-center shadow-2xl"
-                                                                disabled>
-                                                                {num}
-                                                            </button>
-                                                        ) : null
+                                                {draw.stars.map((star, index) =>
+                                                    star ? (
+                                                        <button
+                                                            key={index}
+                                                            className="w-[33px] h-[33px] p-2 rounded-full bg-yellow-500 text-white mr-2 font-bold text-center shadow-2xl"
+                                                            disabled>
+                                                            {star}
+                                                        </button>
+                                                    ) : null
                                                 )}
                                             </dd>
                                             <dt className="sr-only sm:hidden">Ball Numbers</dt>
@@ -110,13 +103,7 @@ export default async function EuroMillions({ searchParams }) {
                                         </dl>
                                     </td>
                                     <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                                        {[
-                                            draw.num_one,
-                                            draw.num_two,
-                                            draw.num_three,
-                                            draw.num_four,
-                                            draw.num_five,
-                                        ].map((num, index) =>
+                                        {draw.numbers.map((num, index) =>
                                             num ? (
                                                 <button
                                                     key={index}
@@ -128,16 +115,15 @@ export default async function EuroMillions({ searchParams }) {
                                         )}
                                     </td>
                                     <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                                        {[draw.lucky_star_01, draw.lucky_star_02].map(
-                                            (num, index) =>
-                                                num ? (
-                                                    <button
-                                                        disabled
-                                                        key={index}
-                                                        className="w-8 h-8 p-2 rounded-full bg-yellow-500 text-white mr-2 font-bold text-center shadow-2xl">
-                                                        {num}
-                                                    </button>
-                                                ) : null
+                                        {draw.stars.map((star, index) =>
+                                            star ? (
+                                                <button
+                                                    disabled
+                                                    key={index}
+                                                    className="w-8 h-8 p-2 rounded-full bg-yellow-500 text-white mr-2 font-bold text-center shadow-2xl">
+                                                    {star}
+                                                </button>
+                                            ) : null
                                         )}
                                     </td>
 
