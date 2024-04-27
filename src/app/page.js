@@ -16,7 +16,6 @@ export default function Home() {
                             width={80}
                             height={80}
                             alt="euromillions logo"
-                            className="text-yellow-500t"
                         />
                     </div>
                     <p>
@@ -26,8 +25,10 @@ export default function Home() {
 
                     <div className="flex justify-start items-center gap-3">
                         <p className="text-blue-900 sm:text-lg font-bold tracking-wide">
-                            Tuesday&apos;s Result -
+                            Tuesday&apos;s Result
                         </p>
+
+                        <p className="text-blue-900 sm:text-lg font-bold tracking-wide">-</p>
                         <p className="text-blue-900 sm:text-lg">23 April 2024</p>
                     </div>
 
@@ -70,7 +71,7 @@ export default function Home() {
                     </Link>
                 </aside>
                 <Image
-                    src="/boat.webp"
+                    src="/island.webp"
                     width={1000}
                     height={400}
                     alt="boat"
