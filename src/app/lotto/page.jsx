@@ -66,14 +66,7 @@ export default async function Lotto({ searchParams }) {
                                         <dl className="font-normal lg:hidden">
                                             <dt className="sr-only">Draw Date</dt>
                                             <dd className="mt-1 text-gray-700">
-                                                {[
-                                                    draw.num_one,
-                                                    draw.num_two,
-                                                    draw.num_three,
-                                                    draw.num_four,
-                                                    draw.num_five,
-                                                    draw.num_six,
-                                                ].map((num, index) =>
+                                                {draw.numbers.map((num, index) =>
                                                     num ? (
                                                         <button
                                                             key={index}
@@ -84,26 +77,21 @@ export default async function Lotto({ searchParams }) {
                                                     ) : null
                                                 )}
 
-                                                <button
-                                                    key={index}
-                                                    className="w-[33px] h-[33px] p-2 rounded-full bg-red-500 text-white mr-2 font-bold text-center shadow-2xl"
-                                                    disabled>
-                                                    {draw.bonus}
-                                                </button>
+                                                {draw.bonus.map((num, index) => (
+                                                    <button
+                                                        key={index}
+                                                        className="w-[33px] h-[33px] p-2 rounded-full bg-red-500 text-white mr-2 font-bold text-center shadow-2xl"
+                                                        disabled>
+                                                        {num}
+                                                    </button>
+                                                ))}
                                             </dd>
                                             <dt className="sr-only sm:hidden">Ball Numbers</dt>
                                         </dl>
                                     </td>
                                     <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
                                         <div className="flex gap-3">
-                                            {[
-                                                draw.num_one,
-                                                draw.num_two,
-                                                draw.num_three,
-                                                draw.num_four,
-                                                draw.num_five,
-                                                draw.num_six,
-                                            ].map((num, index) =>
+                                            {draw.numbers.map((num, index) =>
                                                 num ? (
                                                     <span
                                                         key={index}
@@ -115,11 +103,13 @@ export default async function Lotto({ searchParams }) {
                                         </div>
                                     </td>
                                     <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
-                                        <span
-                                            key={index}
-                                            className="w-8 h-8 p-2 rounded-full bg-red-500 text-white font-bold text-center shadow-2xl flex justify-center items-center">
-                                            {draw.bonus}
-                                        </span>
+                                        {draw.bonus.map((num, index) => (
+                                            <span
+                                                key={index}
+                                                className="w-8 h-8 p-2 rounded-full bg-red-500 text-white font-bold text-center shadow-2xl flex justify-center items-center">
+                                                {num}
+                                            </span>
+                                        ))}
                                     </td>
                                 </tr>
                             ))}
