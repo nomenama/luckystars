@@ -2,7 +2,7 @@ import Image from "next/image";
 import { dateFormatter, getDayOfTheWeek } from "@/utils/helper";
 import Link from "next/link";
 
-export const EuromillionCard = async ({ data }) => {
+export const EuroMillionCard = async ({ data }) => {
     return (
         <div className="bg-white rounded-xl flex flex-col lg:flex-row shadow-2xl">
             <aside className="lg:w-5/12 p-6 flex flex-col justify-start items-start gap-4">
@@ -33,7 +33,7 @@ export const EuromillionCard = async ({ data }) => {
                 </div>
 
                 <div className="flex justify-start items-center gap-2 sm:gap-3 my-2 flex-wrap">
-                    {data.numbers.map((number, index) => (
+                    {data?.numbers?.map((number, index) => (
                         <div
                             key={index}
                             className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-blue-900 text-white text-lg sm:text-xl font-bold">
@@ -41,7 +41,7 @@ export const EuromillionCard = async ({ data }) => {
                         </div>
                     ))}
 
-                    {data.stars.map((star, index) => (
+                    {data?.stars?.map((star, index) => (
                         <div
                             key={index}
                             className="w-8 sm:w-10 h-8 sm:h-10 rounded-full flex justify-center items-center bg-yellow-500 text-white text-lg sm:text-xl font-bold">

@@ -2,20 +2,21 @@
 
 import { Button } from "@/app/components/Buttons/Button";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { PAGE_LIMIT } from "@/static";
 
-export function Pagination({ totalCount, pageLimit }) {
+export function Pagination({ totalCount }) {
     const { replace } = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
 
     const pageNum = Math.max(parseInt(searchParams.get("page"), 10) || 1, 1);
-    const totalPages = Math.ceil(totalCount / pageLimit);
+    const totalPages = Math.ceil(totalCount / PAGE_LIMIT);
 
     const prevPage = pageNum - 1 > 0 ? pageNum - 1 : 1;
     const nextPage = pageNum + 1;
 
-    const countStart = (pageNum - 1) * pageLimit + 1;
-    const countEnd = Math.min(pageNum * pageLimit, totalCount);
+    const countStart = (pageNum - 1) * PAGE_LIMIT + 1;
+    const countEnd = Math.min(pageNum * PAGE_LIMIT, totalCount);
 
     const handlePrevious = () => {
         const params = new URLSearchParams(searchParams);

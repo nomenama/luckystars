@@ -1,4 +1,4 @@
-import { getData } from "@/utils/mongoDB/api";
+import { getDraws } from "@/utils/mongoDB/api";
 import { Pagination } from "@/app/components/Pagination";
 
 export const metadata = {
@@ -8,10 +8,12 @@ export const metadata = {
 };
 
 export default async function EuroMillions({ searchParams }) {
-    //cannot be negative integer
-    let pageNum = Math.max(parseInt(searchParams.page, 10) || 1, 1);
-    const pageLimit = 10;
-    const { draws, count } = await getData("euromillions", pageLimit, pageNum);
+    const { page } = await searchParams;
+
+    //cannot be a negative integer
+    let pageNum = Math.max(parseInt(page, 10) || 1, 1);
+
+    const { draws, count } = await getDraws("euromillions", pageNum);
 
     const tableHeading = "Past Euromillions Draws";
     const tableSubHeading =
@@ -55,7 +57,7 @@ export default async function EuroMillions({ searchParams }) {
                                     className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
                                     Lucky Stars
                                 </th>
-                                {draws[1]?.uk_millionaire_maker ? (
+                                {draws?.[1]?.uk_millionaire_maker ? (
                                     <th
                                         scope="col"
                                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -65,7 +67,7 @@ export default async function EuroMillions({ searchParams }) {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {draws.map((draw) => (
+                            {draws?.map((draw) => (
                                 <tr key={draw._id}>
                                     <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0">
                                         {new Date(draw.date).toLocaleDateString("en-GB")}
@@ -137,7 +139,7 @@ export default async function EuroMillions({ searchParams }) {
                         </tbody>
                     </table>
                 </div>
-                <Pagination totalCount={count} pageLimit={pageLimit} />
+                <Pagination totalCount={count} />
             </div>
         </main>
     );
