@@ -6,6 +6,8 @@ import { getLatestDraw } from "@/utils/mongoDB/api";
 export default async function Home() {
     const currentDraw = await getLatestDraw("euromillions");
 
+    //todo - add error boundary
+
     return (
         <main className="flex-1 mx-auto max-w-7xl flex flex-col gap-10 items-center p-6 lg:px-8 overflow-auto">
             <Suspense fallback={<div>Loading...</div>}>

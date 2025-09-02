@@ -7,10 +7,15 @@ export async function getLatestDraw(collectionName) {
         const client = await connectToDb();
         const db = client.db();
 
-        const latestDraw = await db.collection(collectionName).find({}).limit(1).toArray();
+        const latestDraw = await db
+            .collection(collectionName)
+            .find({})
+            .sort({ id: -1 })
+            .limit(1)
+            .toArray();
 
         if (latestDraw.length > 0) {
-            return latestDraw[latestDraw.length - 1];
+            return latestDraw[0];
         } else {
             return {};
         }
