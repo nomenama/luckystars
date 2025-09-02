@@ -3,6 +3,8 @@ import { unstable_noStore as noStore } from "next/cache";
 import { PAGE_LIMIT } from "@/static";
 
 export async function getLatestDraw(collectionName) {
+    noStore();
+
     try {
         const client = await connectToDb();
         const db = client.db();
