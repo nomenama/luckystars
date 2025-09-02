@@ -42,3 +42,18 @@ export const dateFormatter = (date) => {
 
     return `${day}${getDaySuffix(day)} ${month} ${year}`;
 };
+
+// Helper function to format currency
+export function formatCurrency(amount) {
+    return new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(amount);
+}
+
+// Helper function to format numbers with commas
+export function formatNumber(num) {
+    return new Intl.NumberFormat("en-GB").format(num);
+}
