@@ -129,14 +129,14 @@ const LatestDrawCard = async ({
             <div className="flex justify-start items-center gap-3 mb-6">
                 <div className="flex items-center gap-3">
                     <p
-                        className={`${primaryColorClasses[primaryColor]?.split(" ")[1] || "text-blue-900"} text-lg lg:text-xl font-bold tracking-wide`}>
+                        className={`${primaryColorClasses[primaryColor]?.split(" ")[1] || "text-blue-900"} text-base lg:text-xl font-bold tracking-wide`}>
                         {`${getDayOfTheWeek(currentDraw.date)}'s Result`}
                     </p>
                 </div>
 
                 <div className="h-4 w-px bg-gray-300 mx-1" />
 
-                <p className="text-gray-600 text-lg lg:text-xl font-medium">
+                <p className="text-gray-600 text-base lg:text-xl font-medium">
                     {dateFormatter(currentDraw.date)}
                 </p>
             </div>
@@ -145,7 +145,7 @@ const LatestDrawCard = async ({
                 {currentDraw.numbers.map((number, index) => (
                     <div
                         key={`number-${index}`}
-                        className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex justify-center items-center ${primaryColorClasses[primaryColor]?.split(" ")[0] || "bg-blue-900"} text-white text-lg sm:text-xl font-bold shadow-lg transform hover:scale-110 transition-all duration-200 hover:shadow-xl`}>
+                        className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex justify-center items-center ${primaryColorClasses[primaryColor]?.split(" ")[0] || "bg-blue-900"} text-white text-sm sm:text-xl font-bold shadow-lg transform hover:scale-110 transition-all duration-200 hover:shadow-xl`}>
                         {number}
                     </div>
                 ))}
@@ -154,7 +154,7 @@ const LatestDrawCard = async ({
                     currentDraw.stars.map((star, index) => (
                         <div
                             key={`star-${index}`}
-                            className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex justify-center items-center ${accentColorClasses[accentColor]?.split(" ")[0] || "bg-yellow-500"} text-white text-lg sm:text-xl font-bold shadow-lg transform hover:scale-110 transition-all duration-200 hover:shadow-xl relative`}>
+                            className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex justify-center items-center ${accentColorClasses[accentColor]?.split(" ")[0] || "bg-yellow-500"} text-white text-sm sm:text-xl font-bold shadow-lg transform hover:scale-110 transition-all duration-200 hover:shadow-xl relative`}>
                             <span className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
                             {star}
                         </div>
