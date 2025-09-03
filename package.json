@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.1.3",
     "mongodb": "^6.5.0",
     "next": "15.5.2",
+    "nextjs-toploader": "^3.8.16",
     "react": "^18",
     "react-dom": "^18"
   },
