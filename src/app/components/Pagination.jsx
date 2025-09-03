@@ -32,6 +32,8 @@ export function Pagination({ totalCount }) {
         replace(`${pathname}?${params.toString()}`);
     };
 
+    if (totalCount < PAGE_LIMIT + 1) return null;
+
     return (
         <nav
             className="flex items-center justify-between space-x-3 border-t border-gray-200 py-3"
