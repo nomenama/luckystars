@@ -1,9 +1,14 @@
 import { connectToDb } from "@/utils/mongoDB/connection";
 import { unstable_noStore as noStore } from "next/cache";
 import { PAGE_LIMIT } from "@/static";
+import process from "next/dist/build/webpack/loaders/resolve-url-loader/lib/postcss";
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function getLatestDraw(collectionName) {
     noStore();
+
+    process.env.NODE_ENV === "development" && (await delay(3000));
 
     try {
         const client = await connectToDb();
@@ -19,11 +24,11 @@ export async function getLatestDraw(collectionName) {
         if (latestDraw.length > 0) {
             return latestDraw[0];
         } else {
-            return {};
+            return null;
         }
     } catch (err) {
         console.error(err);
-        return {};
+        return null;
     }
 }
 
