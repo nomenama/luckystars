@@ -1,11 +1,16 @@
 /**
  * Check out the API repository: https://github.com/pedro-mealha/euromillions-api
-* */
+ * These APIs are not used because Trigger is set in MongoDB Atlas to pull the latest draws and store them in the database.
+ * Use MongoDB APIs instead.
+ * */
 import { PAGE_LIMIT } from "@/static";
 
-
-const BASE_URL = 'https://euromillions.api.pedromealha.dev/v1/draws';
-const options = {method: 'GET', headers: {accept: 'application/json'}, next: {revalidate: 60}};
+const BASE_URL = "https://euromillions.api.pedromealha.dev/v1/draws";
+const options = {
+    method: "GET",
+    headers: { accept: "application/json" },
+    next: { revalidate: 60 },
+};
 
 export async function getLatestDraw() {
     const response = await fetch(BASE_URL, options);
@@ -26,9 +31,7 @@ export async function getDraws(pageNumber = 1) {
     const start = total - pageNumber * PAGE_LIMIT;
     const end = start + PAGE_LIMIT;
 
-    const pageData = data
-        .slice(Math.max(0, start), Math.max(0, end))
-        .reverse(); // small slice only
+    const pageData = data.slice(Math.max(0, start), Math.max(0, end)).reverse(); // small slice only
 
     return {
         data: pageData,
@@ -36,7 +39,6 @@ export async function getDraws(pageNumber = 1) {
         pageCount,
     };
 }
-
 
 export async function getDraw(drawId) {
     const response = await fetch(`${BASE_URL}/${drawId}`, options);
