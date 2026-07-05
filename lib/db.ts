@@ -1,3 +1,5 @@
+"use server";
+
 import { MongoClient, Db } from "mongodb";
 import { DrawResult } from "@/lib/types";
 
@@ -88,4 +90,25 @@ export async function getPaginatedDraws(params: { page?: number; limit?: number 
         total,
         totalPages: Math.ceil(total / limit),
     };
+}
+
+export async function getAllSortedResults(): Promise<number[][]> {
+    const db = await getDb();
+
+    const draws = await db
+        .collection<DrawResult>("euromillions")
+        .find(
+            {},
+            {
+                projection: {
+                    _id: 0,
+                    numbers: 1,
+                    stars: 1,
+                },
+            }
+        )
+        .sort({ id: -1 })
+        .toArray();
+
+    return draws.map(({ numbers, stars }) => [...numbers.map(Number), ...stars.map(Number)]);
 }
