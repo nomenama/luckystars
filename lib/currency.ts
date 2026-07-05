@@ -2,11 +2,16 @@ import "server-only";
 
 const FALLBACK_EUR_TO_GBP = 0.86;
 
-export interface ExchangeRate {
-  rate: number;
-  isLive: boolean;
-  fetchedAt: string;
+export interface RawExchangeRate {
+    date: Date | string;
+    base: string;
+    quote: string;
+    rate: number;
 }
+
+export type ExchangeRate = Omit<RawExchangeRate, "date" | "base" | "quote"> & {
+    isLive: boolean;
+};
 
 /**
  * Fetches an approximate, live-ish EUR -> GBP rate.
@@ -17,26 +22,16 @@ export interface ExchangeRate {
  * page always renders.
  */
 export async function getEurToGbpRate(): Promise<ExchangeRate> {
-  try {
-    const res = await fetch("https://api.frankfurter.dev/v2/rates?quotes=GBP", {
-      next: { revalidate: 3600 }, // refresh at most once an hour
-    });
+    try {
+        const res = await fetch("https://api.frankfurter.dev/v2/rates?quotes=GBP", {
+            next: { revalidate: 3600 }, // refresh at most once an hour
+        });
+        const data: ExchangeRate[] = await res.json();
+        const rate = data[0].rate;
 
-    if (!res.ok) throw new Error(`Rate request failed with ${res.status}`);
-
-    const data = await res.json();
-    const rate = data?.rates?.GBP;
-
-    if (typeof rate !== "number" || Number.isNaN(rate)) {
-      throw new Error("Malformed rate response");
+        return { rate, isLive: true };
+    } catch (error) {
+        console.log(error);
+        return { rate: FALLBACK_EUR_TO_GBP, isLive: false };
     }
-
-    return { rate, isLive: true, fetchedAt: new Date().toISOString() };
-  } catch {
-    return {
-      rate: FALLBACK_EUR_TO_GBP,
-      isLive: false,
-      fetchedAt: new Date().toISOString(),
-    };
-  }
 }

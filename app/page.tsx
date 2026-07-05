@@ -1,7 +1,8 @@
-import { getJackpot, getLatestDraw } from "@/lib/data";
+import { getJackpot } from "@/lib/data";
 import { getEurToGbpRate } from "@/lib/currency";
-import ConstellationBoard from "@/components/ConstellationBoard";
 import PrizeTable from "@/components/PrizeTable";
+import { Ball } from "@/components/Ball";
+import { getLatestDraw } from "@/lib/db";
 
 const eur = new Intl.NumberFormat("en-IE", {
     style: "currency",
@@ -15,8 +16,23 @@ const gbp = new Intl.NumberFormat("en-GB", {
     maximumFractionDigits: 0,
 });
 
+function jackpotStatus(winners: number) {
+    if (winners === 0) return "Rolls over to the next draw";
+    if (winners === 1) return "Won by 1 ticket";
+    return `Shared by ${winners} tickets`;
+}
+
 export default async function HomePage() {
     const [draw, exchangeRate] = await Promise.all([getLatestDraw(), getEurToGbpRate()]);
+
+    if (!draw) {
+        return (
+            <div className="mx-auto max-w-5xl px-6 pb-24 text-center">
+                <p className="mt-20 text-lg text-slate">No draw data available at the moment.</p>
+            </div>
+        );
+    }
+
     const jackpot = getJackpot(draw);
 
     const formattedDate = new Date(draw.date).toLocaleDateString("en-GB", {
@@ -28,41 +44,47 @@ export default async function HomePage() {
 
     return (
         <div className="mx-auto max-w-5xl px-6 pb-24">
-            <section id="result" className="animate-rise pt-14 text-center sm:pt-20">
-                <p className="font-mono text-sm uppercase tracking-[0.2em] text-comet">
+            <section id="result" className="text-center">
+                <p className="pt-12 text-sm font-medium uppercase tracking-widest text-slate">
+                    Latest EuroMillions Results
+                </p>
+
+                <h1 className="mt-2 text-2xl font-semibold text-cream sm:text-4xl">
                     {formattedDate}
-                </p>
-                <h1 className="mt-4 font-display text-4xl italic text-cream sm:text-5xl">
-                    Tonight&rsquo;s sky
                 </h1>
-                <p className="mx-auto mt-3 max-w-md text-sm text-slate">
-                    The five winning numbers and two lucky stars from the latest EuroMillions draw.
-                </p>
 
-                <div className="mt-14">
-                    <ConstellationBoard numbers={draw.numbers} stars={draw.stars} />
-                </div>
+                <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-8">
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {draw.numbers.map((number) => (
+                            <Ball key={number}>{number}</Ball>
+                        ))}
 
-                {jackpot && (
-                    <div className="mx-auto mt-14 max-w-sm rounded-2xl border border-gold/30 bg-gold/5 px-6 py-5">
-                        <p className="text-xs uppercase tracking-wide text-slate">
-                            Jackpot (5 + 2)
-                        </p>
-                        <p className="mt-1 font-display text-3xl text-gold">
-                            {eur.format(jackpot.prize)}
-                        </p>
-                        <p className="mt-1 font-mono text-sm text-comet">
-                            Approx {gbp.format(jackpot.prize * exchangeRate.rate)}
-                        </p>
-                        <p className="mt-1 text-xs text-slate">
-                            {jackpot.winners === 1
-                                ? "Won by 1 ticket"
-                                : jackpot.winners === 0
-                                  ? "Rolls over to the next draw"
-                                  : `Shared by ${jackpot.winners} tickets`}
-                        </p>
+                        {draw.stars.map((star) => (
+                            <Ball key={star} star>
+                                {star}
+                            </Ball>
+                        ))}
                     </div>
-                )}
+
+                    {jackpot && (
+                        <div className="mt-10 border-t border-white/10 pt-8">
+                            <p className="text-sm uppercase tracking-widest text-slate">Jackpot</p>
+
+                            <p className="relative mt-2 text-4xl font-bold text-gold">
+                                <span className="absolute inset-0 -z-10 blur-2xl opacity-30 bg-gold" />
+                                {eur.format(jackpot.prize)}
+                            </p>
+
+                            <p className="mt-2 text-lg text-slate">
+                                ≈ {gbp.format(jackpot.prize * exchangeRate.rate)}
+                            </p>
+
+                            <p className="mt-4 text-sm text-slate">
+                                {jackpotStatus(jackpot.winners)}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </section>
 
             <section id="prizes" className="mt-24 sm:mt-32">

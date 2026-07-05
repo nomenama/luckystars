@@ -3,9 +3,11 @@
  * These APIs are not used because Trigger is set in MongoDB Atlas to pull the latest draws and store them in the database.
  * Use MongoDB APIs instead.
  * */
-import { PAGE_LIMIT } from "@/static";
+
+const PAGE_LIMIT = 10;
 
 const BASE_URL = "https://euromillions.api.pedromealha.dev/v1/draws";
+
 const options = {
     method: "GET",
     headers: { accept: "application/json" },
@@ -40,7 +42,7 @@ export async function getDraws(pageNumber = 1) {
     };
 }
 
-export async function getDraw(drawId) {
+export async function getDraw(drawId: number) {
     const response = await fetch(`${BASE_URL}/${drawId}`, options);
     return response.json();
 }

@@ -1,6 +1,6 @@
 import "server-only";
 import type { DrawResult } from "./types";
-import latestDraw from "@/data/latest-draw.json";
+import latestDraw from "@/_data/latest-draw.json";
 
 /**
  * Loads the latest EuroMillions draw.
@@ -15,13 +15,11 @@ import latestDraw from "@/data/latest-draw.json";
  *
  * For now it reads the bundled JSON fixture so the page works out of the box.
  */
-export async function getLatestDraw(): Promise<DrawResult> {
-  return latestDraw as DrawResult;
-}
+/*export async function getLatestDraw(): Promise<DrawResult> {
+    return latestDraw as DrawResult;
+}*/
 
 /** The jackpot tier is always 5 matched numbers + 2 matched stars. */
 export function getJackpot(draw: DrawResult) {
-  return draw.prizes.find(
-    (p) => p.matched_numbers === 5 && p.matched_stars === 2
-  );
+    return draw.prizes.find((p) => p.matched_numbers === 5 && p.matched_stars === 2);
 }

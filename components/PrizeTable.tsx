@@ -62,7 +62,7 @@ export default function PrizeTable({ prizes, exchangeRate }: PrizeTableProps) {
                 </div>
             </div>
 
-            <p className="mb-4 text-xs text-slate">
+            <p className="my-4 md:mt-0 md:mb-4 text-xs text-slate">
                 GBP amounts are approximate, converted at{" "}
                 <span className="font-mono text-comet">
                     &pound;1 &asymp; &euro;{(1 / exchangeRate.rate).toFixed(2)}.
