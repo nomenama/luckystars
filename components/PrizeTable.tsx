@@ -103,11 +103,7 @@ export default function PrizeTable({ prizes, exchangeRate }: PrizeTableProps) {
                                             <span className="font-mono">{p.matched_stars}</span>
                                             <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
                                             {isJackpot && (
-                                                <>
-                                                    (
-                                                    <Crown className="h-5 w-5 text-gold fill-gold" />
-                                                    Jackpot )
-                                                </>
+                                                <Crown className="h-5 w-5 text-gold fill-gold" />
                                             )}
                                         </span>
                                     </td>
