@@ -54,7 +54,7 @@ export default async function HomePage() {
                 </h1>
 
                 <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-8">
-                    <div className="flex flex-wrap justify-center gap-4">
+                    <div className="grid grid-cols-7 justify-items-center gap-4">
                         {draw.numbers.map((number) => (
                             <Ball key={number}>{number}</Ball>
                         ))}

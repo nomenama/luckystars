@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Prize } from "@/lib/types";
 import type { ExchangeRate } from "@/lib/currency";
+import { Crown, Star, Trophy } from "lucide-react";
 
 interface PrizeTableProps {
     prizes: Prize[];
@@ -100,11 +101,13 @@ export default function PrizeTable({ prizes, exchangeRate }: PrizeTableProps) {
                                             <span className="text-slate">nums</span>
                                             <span className="text-slate">+</span>
                                             <span className="font-mono">{p.matched_stars}</span>
-                                            <span className="text-slate">stars</span>
+                                            <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
                                             {isJackpot && (
-                                                <span className="ml-1 rounded-full bg-gold px-2 py-0.5 text-[10px] font-semibold text-midnight">
-                                                    Jackpot
-                                                </span>
+                                                <>
+                                                    (
+                                                    <Crown className="h-5 w-5 text-gold fill-gold" />
+                                                    Jackpot )
+                                                </>
                                             )}
                                         </span>
                                     </td>
