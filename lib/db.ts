@@ -42,6 +42,19 @@ export async function getLatestDraw(): Promise<DrawResult | null> {
     return latest[0] ?? null;
 }
 
+export async function getDrawById(drawId: number): Promise<DrawResult | null> {
+    const db = await getDb();
+
+    const data = await db
+        .collection<DrawResult>("euromillions")
+        .find({
+            id: drawId,
+        })
+        .toArray();
+
+    return data[0] ?? null;
+}
+
 export async function getPaginatedDraws(params: { page?: number; limit?: number }): Promise<{
     data: DrawResult[];
     page: number;

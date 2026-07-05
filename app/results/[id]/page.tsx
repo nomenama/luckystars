@@ -1,20 +1,19 @@
+import { notFound } from "next/navigation";
 import { getJackpot } from "@/lib/data";
 import { getEurToGbpRate } from "@/lib/currency";
 import PrizeTable from "@/components/PrizeTable";
+import { getDrawById } from "@/lib/db";
 import { Ball } from "@/components/Ball";
-import { getLatestDraw } from "@/lib/db";
 import { eur, formattedLongDate, gbp, jackpotStatus } from "@/lib/helper";
 
-export default async function HomePage() {
-    const [draw, exchangeRate] = await Promise.all([getLatestDraw(), getEurToGbpRate()]);
+export default async function DrawDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
-    if (!draw) {
-        return (
-            <div className="mx-auto max-w-5xl px-6 pb-24 text-center">
-                <p className="mt-20 text-lg text-slate">No draw data available at the moment.</p>
-            </div>
-        );
-    }
+    if (!Number.isFinite(Number(id))) notFound();
+
+    const [draw, exchangeRate] = await Promise.all([getDrawById(Number(id)), getEurToGbpRate()]);
+
+    if (!draw) notFound();
 
     const jackpot = getJackpot(draw);
 
@@ -22,7 +21,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-5xl px-6 pb-24">
             <section id="result" className="text-center">
                 <p className="pt-12 text-sm font-medium uppercase tracking-widest text-slate">
-                    Latest EuroMillions Results
+                    EuroMillions Results
                 </p>
 
                 <h1 className="mt-2 text-2xl font-semibold text-cream sm:text-4xl">

@@ -16,8 +16,8 @@ export default function Header() {
                 </Link>
 
                 <nav aria-label="Primary" className="flex gap-8 text-sm text-slate">
-                    <Link href="/results">Draw History</Link>
                     <Link href="/statistic">Statistic</Link>
+                    <Link href="/results">Draw History</Link>
                 </nav>
             </div>
         </header>
