@@ -6,6 +6,7 @@ const nextConfig = {
             hmrRefreshes: true,
         },
     },
+    reactStrictMode: true,
 };
 
 export default nextConfig;
